@@ -1,15 +1,31 @@
 ## БД
-Необходимо создать новую таблицу **notificate_jobs**  
+Таблица **users**
 ```
-create table `notificate_jobs`  
-(  
-    id bigint unsigned auto_increment primary key,  
-    user_id bigint unsigned not null,  
-    working tinyint unsigned not null default 0,  
-    constraint user_id_foreign  
-        foreign key (user_id) references users (id)  
-            on delete cascade  
-) collate = utf8mb4_unicode_ci;  
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `validts` int DEFAULT '0',
+  `confirmed` tinyint unsigned DEFAULT '0',
+  `checked` tinyint unsigned DEFAULT '0',
+  `valid` tinyint unsigned DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `users_validts_IDX` (`validts`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=6016 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;  
+```
+  
+  
+
+Таблица **notificate_jobs**  
+```
+CREATE TABLE IF NOT EXISTS `notificate_jobs` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint unsigned NOT NULL,
+  `working` tinyint unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `user_id_foreign` (`user_id`),
+  CONSTRAINT `user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=256 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 ```
 =========================================================================
 
